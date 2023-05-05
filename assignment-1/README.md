@@ -1,5 +1,5 @@
-Pull the "assignment-1" folder to your device.
-Now open this folder in terminal
+Pull the "assignment-1" folder to your device.\n
+Now open this folder in terminal\n
 First run 'python .\data_server.py'
 Data server is live now.
 Then run 'python .\cloud_server.py'
