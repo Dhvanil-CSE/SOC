@@ -37,7 +37,7 @@ while a==0:
                 if qval=='exit':
                     a=1
                     pf_list=qval
-                    break
+                    
                 if qval != 'exit':
                     pf_list=pfactor(qval)
                 data["result"]=pf_list
