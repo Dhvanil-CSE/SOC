@@ -1,4 +1,4 @@
-Pull the "assignment-1" folder to your device.
+Pull the "assignment-1" folder to your device.(cloud_server.py is modified)
 
 Now open this folder in terminal
 Run 'python .\data_server.py','python .\cloud_server.py' and 'python .\echo_client.py' in different windows.
