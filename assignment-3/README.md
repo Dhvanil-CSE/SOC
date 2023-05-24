@@ -1,6 +1,6 @@
 This folder contains the submission of RSA.py , ElGamal.py and Paillier.py for Week-3 of SoC.<br>
 To run the files read the following instructions: <br>
-1. RSA.py:<br>
+1.RSA.py:<br>
 <p>Create an object of rsa_class by assignment. for example: o=rsa_class(k) ,
     where k is the number of bits of prime generated.<br>
     This class contains :<br>
