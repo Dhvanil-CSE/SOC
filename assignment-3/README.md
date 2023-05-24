@@ -5,7 +5,7 @@ To run the files read the following instructions: <br>
     where k is the number of bits of prime generated.<br>
     This class contains :<br>
     1.get_public_key(): It returns the public key.<br>
-    2.encrypt(plaintext): It takes in the message and returns the ciphertext.<br>
+    2.encrypt(plaintext): It takes in the message and returns the ciphertext(in numerical form).<br>
     3.decrypt(ciphertext): It takes in the ciphertext and return the plaintext.
   
 </p>
