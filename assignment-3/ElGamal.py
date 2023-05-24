@@ -14,7 +14,6 @@ class elgamal_class:
         self.pubk=(self.p,self.g,self.B)
         return self.pubk
     def encrypt(self,pubk,m):
-        m=m.encode()
         m=m.hex()
         m=int(m,16)
         if m<self.p:
