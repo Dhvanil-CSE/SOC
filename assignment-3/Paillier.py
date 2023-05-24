@@ -29,7 +29,6 @@ class paillier_class:
         self.pubk=(self.n,self.g)
         return self.pubk
     def encrypt(self,m):
-        m=m.encode()
         m=m.hex()
         m=int(m,16)
         if m<self.n:
@@ -49,7 +48,7 @@ class paillier_class:
         m=mod(k*self.u,self.n)
         m=hex(m)
         m=m[2:]
-        m=bytearray.fromhex(m).decode()
+        m=bytearray.fromhex(m)
         return m
 
 k=int(input())
