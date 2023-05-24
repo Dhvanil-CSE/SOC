@@ -24,7 +24,7 @@ class rsa_class:
     def get_public_key(self):
         self.pk=(self.e,self.N)
     def encrypt(self,plaintext):
-        plaintext=plaintext.encode()
+    
         plaintext=plaintext.hex()
         
         plaintext=int(plaintext,16)
@@ -40,7 +40,7 @@ class rsa_class:
                 m=mod(cipher**d,self.pk[1])
                 m=hex(m)
                 m=m[2:]
-                m=bytearray.fromhex(m).decode()
+                m=bytearray.fromhex(m)
                 return m
             else:
                 print("error -1")
