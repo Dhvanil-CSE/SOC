@@ -34,7 +34,7 @@ class elgamal_class:
         M=mod(self.Asend[1]*invs,self.p)
         M=hex(M)
         M=M[2:]
-        M=bytearray.fromhex(M).decode()
+        M=bytearray.fromhex(M)
         return M
     
 '''p=int(input("enter p: "))
