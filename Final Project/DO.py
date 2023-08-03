@@ -52,24 +52,24 @@ def A_form(pi,M,q_encrypted,pubk,d,c,epsilon):
             if(t<d):
                 phi=int(beta_q*int(M[i,j]))
                 # if(phi>0):
-                print("q",type(q_encrypted[t]))
-                print(type(A_q[i]))
-                print(phi)
+                # print("q",type(q_encrypted[t]))
+                # print(type(A_q[i]))
+                # print(phi)
                 A_q[i]=str(gmpy2.mpz(gmpy2.mpz(float(A_q[i]))*pow(gmpy2.mpz(float(q_encrypted[t])),gmpy2.mpz(float(phi)),gmpy2.mpz(int(pubk[0]**2)))))
-                print("a",A_q[i])
+                # print("a",A_q[i])
                 # else:
                 #     A_q[i]=A_q[i]/(int(q_encrypted[t])**abs(int(phi)))
 
             elif(t==d):
                 phi=int(beta_q*int(M[i,j]))
                 A_q[i]=(A_q[i]*p_encrypt(int(pubk[0]),int(pubk[1]),phi))
-                print("a",A_q[i])
+                # print("a",A_q[i])
             elif(t<=d+c):
                 omega=t-d-1
                 phi=(beta_q*int(M[i,j])*int(R_q[omega]))
-                print(phi)
+                # print(phi)
                 A_q[i]=(A_q[i]*int(p_encrypt(int(pubk[0]),int(pubk[1]),phi)))
-                print("a",A_q[i])
+                # print("a",A_q[i])
     return A_q
 
 
@@ -96,13 +96,13 @@ def DOapproval(DOreturn,q_encrypted,pubk):
 #A_i computation
     if(DOreturn==1):
         tvar=1
-        print(type(pi))
-        print(type(M))
-        print(type(q_encrypted))
-        print(type(pubk))
-        print(type(d))
-        print(type(c))
-        print(type(epsilon))
+        # print(type(pi))
+        # print(type(M))
+        # print(type(q_encrypted))
+        # print(type(pubk))
+        # print(type(d))
+        # print(type(c))
+        # print(type(epsilon))
         A=A_form(pi,M,q_encrypted,pubk,d,c,epsilon)
         return A,tvar
 #if not
@@ -116,8 +116,8 @@ d=50
 n=10000
 
 #security parameters
-c=random.randint(1,10)
-epsilon=random.randint(1,10)
+c=random.randint(1,5)
+epsilon=random.randint(1,5)
 
 #invertible matrix M 
 while True:
@@ -125,10 +125,10 @@ while True:
     if np.linalg.det(M) !=0:
          break
 #(d+1) dimension vector S
-S=random.randint(8,size=d+1)
+S=random.randint(3,size=d+1)
 
 # c-dimensional tou
-tou=random.randint(8,size=c)
+tou=random.randint(3,size=c)
 
 #doubtful
 # tou=np.multiply(np.ones((n,c)),tou)
@@ -143,7 +143,7 @@ DO_key=[S,tou,pi,M]
 #datapoints
 D=pd.read_csv("database.txt",header=None)
 D=D.to_numpy()
-print(D.shape)
+# print(D.shape)
 # D=np.random.randint(low=-10,high=11, size=(n,d))
 
 #computing the reuirements of pidot(Ddot)
@@ -160,7 +160,8 @@ HOST = "127.0.0.1"  # Standard loopback interface address (localhost)
 PORT = 9998  # Port used for connection of CS an DO
 # a=0
 # while a==0:
-print(D_dot)
+# print(D_dot)
+print("Database uploaded to CS......")
 
 with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
     s.connect((HOST, PORT))
@@ -184,13 +185,15 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                     data=receive_array(conn)
                     pubk=data[0:2]
                     q_received=data[2:]
-                    print(pubk)
+                    # print(pubk)
+                    print("Public Key Received")
                     
-                    print(q_received)
+                    # print(q_received)
+                    print("Pailler-Encrypted Query received")
                     
                     approve=int(input("DO YOU WANT TO APPROVE THE QUERY ( 1 for yes 0 for no ) :"))
                     A_q, mvar =DOapproval(approve,q_received,pubk)
-                    print(A_q)
+                    # print(A_q)
                 # print(f"Connected by {addr}")
                 # while True:
                 #     data = conn.recv(10024)
@@ -211,6 +214,10 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                     
                     A=pickle.dumps({"A_q":A_q,"var":mvar})
                     conn.sendall(A)
-                    print("hello")
+                    if(mvar==1):
+                        print("Query encrypted by DO sent....")
+                    else:
+                         print("Permission denied")
+                    # print("hello")
                     # resp3=conn.recv(10024)
                     # print(resp3.decode())

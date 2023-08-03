@@ -60,8 +60,8 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         #data = conn.recv(10000024)
         D_dot_received = receive_array(conn)
         
-        print(D_dot_received)     
-        print("D_dot_received")     
+        # print(D_dot_received)     
+        print("Database updated")     
         s.close()
         conn.close()
             # if not data:
@@ -83,15 +83,15 @@ PORT3 = 9998  # Port used for connection of QU an CS
 with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         s.bind((HOST2, PORT3))
         s.listen()
-        print("hello")
         conn, addr = s.accept()
         with conn:
             cr=conn.recv(1024000000)
+            # print("QU sent a Query....Showing results...")
             
             result1=pickle.loads(cr)
             q_prime=result1['pt']
             nvar=result1["var"]
-            print(q_prime)
+            # print(q_prime)
             # print(f"Connected by {addr}")
             # while True:
             #     data = conn.recv(100024)
@@ -101,8 +101,10 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
             #     pt=data.decode("utf-8")
             #     pt=json.loads(pt)
                 # q_prime=pt["pt"]
-if(nvar==0):
-    print("Not Allowed")
-else:
-    index_set=kNNdist(D_dot_received,q_prime,k)
-    print(index_set)
+            if(nvar==1):
+    
+
+                index_set=kNNdist(D_dot_received,q_prime,k)
+                print("The K- nearest datapoint indexes sent")
+                A=pickle.dumps({"A_q":index_set,"var":nvar})
+                conn.sendall(A)

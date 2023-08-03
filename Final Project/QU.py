@@ -71,15 +71,15 @@ class paillier_class:
 d=50
 o=paillier_class()
 pubk=o.get_public_key() #(I)QU generates a public key pair {pk, sk} of homomorphic cryptosystem
-print(pubk[0])
-sg = input()
+# print(pubk[0])
+sg = input("Enter your query string with space as value separator : ")
 ar = sg.split(" ")
 q=[]
 for i in ar:
     q.append(int(i))
 #q is the query
 # q=np.random.randint(low=-10,high=11,size=(d))
-print(q)
+# print(q)
 ciph=np.random.randint(low=-10,high=11,size=(d))
 for i in range(d):
     m=int(q[i])
@@ -97,7 +97,7 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         s.connect((HOST, PORT2))
         pubkciph=np.concatenate((pubk,ciph))
         send_array(s,pubkciph)
-        print("send")
+        # print("send")
         # json_dic={"pubk":pubk,"cipher":ciph.tolist()}
         # json_dic=json.dumps(json_dic)
         # json_dic=json_dic.encode()
@@ -105,10 +105,11 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         # resp2 = s.recv(10024) #Query to DO sent
         # print(resp2.decode())
 #Receives A_q from DO
+        print("Waiting for query to be approved...")
         A_q=pickle.loads(s.recv(1024000000))
         mvar=A_q["var"]
         A_q=A_q['A_q']
-        print(A_q)
+        
         s.close()
 if(mvar==0):
     print("query denied")
@@ -123,7 +124,8 @@ else:
             ptext-=pubk[0]
             
         pt[i]=ptext
-    print(pt)
+    # print(pt)
+    print("Query uploaded to CS....")
     #upload pt to CS
 
 HOST2 = "127.0.0.1"  # The server's hostname or IP address
@@ -134,6 +136,9 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         nvar=1
         A=pickle.dumps({"pt":pt,"var":nvar})
         s.sendall(A)
+        lst=pickle.loads(s.recv(1024000000))
+        lst=lst["A_q"]
+        print("k-NN datapoints found : ",lst)
     else:
         nvar=0
         A=pickle.dumps({"pt":"Not Allowed","var":nvar})
